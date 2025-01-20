@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface InterviewQuestionService {
 
-    List<InterviewQuestionDTO> getInterviewQuestionsByTopicId(Long topicId);
+    List<InterviewQuestionDTO> getQuestionsByTopicId(Long topicId);
+    List<InterviewQuestionDTO> getQuestionsByTopicId(Long topicId, int pageNumber, int pageSize);
 }
