@@ -29,10 +29,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String lastname;
 
-    // Optional: Track questions attempted and their status
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserQuestion> userQuestions;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

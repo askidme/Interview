@@ -1,5 +1,6 @@
 package com.codergm.interview.model.entity;
 
+import com.codergm.interview.model.ConfidenceLevel;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,21 +8,13 @@ import lombok.Data;
 @Entity
 @Table(name = "user_questions")
 public class UserQuestion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @EmbeddedId
+    private UserQuestionId id;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
-    private InterviewQuestion question;
-
-    @Column(nullable = false)
+    @Column()
     private boolean isCorrect;
 
-    @Column(nullable = false)
-    private int confidenceLevel;
+    @Enumerated(EnumType.STRING)
+    private ConfidenceLevel confidenceLevel;
 }

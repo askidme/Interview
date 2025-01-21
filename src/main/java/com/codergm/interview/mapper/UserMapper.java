@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "userQuestions", ignore = true)
     @Mapping(target = "password", source = "password", qualifiedBy = PasswordEncoder.class)
     User toEntity(UserDTO user);
 
