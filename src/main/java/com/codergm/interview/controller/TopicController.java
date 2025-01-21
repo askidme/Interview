@@ -3,7 +3,6 @@ package com.codergm.interview.controller;
 import com.codergm.interview.model.dto.TopicDTO;
 import com.codergm.interview.service.TopicService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/topics")
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class TopicController {
 

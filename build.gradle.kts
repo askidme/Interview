@@ -1,4 +1,5 @@
 val mapstructVersion: String by extra("1.5.5.Final")
+val jsonWebToken: String by extra("0.11.5")
 
 plugins {
     java
@@ -28,9 +29,13 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation("io.jsonwebtoken:jjwt-api:${jsonWebToken}")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:${jsonWebToken}")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${jsonWebToken}")
     annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
