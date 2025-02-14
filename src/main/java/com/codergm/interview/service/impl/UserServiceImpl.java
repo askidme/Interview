@@ -42,6 +42,6 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        return jwtUtil.generateToken(request.getEmail());
+        return jwtUtil.generateToken(user);
     }
 }

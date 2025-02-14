@@ -2,6 +2,8 @@ package com.codergm.interview.service.impl;
 
 import com.codergm.interview.mapper.InterviewQuestionMapper;
 import com.codergm.interview.model.dto.InterviewQuestionDTO;
+import com.codergm.interview.model.entity.InterviewQuestion;
+import com.codergm.interview.model.request.InterviewQuestionsRequest;
 import com.codergm.interview.repository.InterviewQuestionRepository;
 import com.codergm.interview.service.InterviewQuestionService;
 import lombok.AllArgsConstructor;
@@ -32,4 +34,18 @@ public class InterviewQuestionServiceImpl implements InterviewQuestionService {
                 .stream().map(interviewQuestionMapper::toDto).toList();
     }
 
+    @Override
+    public List<Long> getQuestionsForTopicAndConfidence(InterviewQuestionsRequest request) {
+        return request.getTopicConfidenceLevelsList().stream()
+                .flatMap(topicConfidenceLevels ->
+                        interviewQuestionRepository.findByTopicAndOptionalConfidenceLevels(topicConfidenceLevels.getTopicId(),
+                                request.getUserId(),
+                                topicConfidenceLevels.getConfidenceLevels()).stream())
+            .map(InterviewQuestion::getId).toList();
+    }
+
+    @Override
+    public InterviewQuestionDTO getInterviewQuestionById(Long questionId) {
+        return interviewQuestionRepository.findById(questionId).map(interviewQuestionMapper::toDto).orElse(null);
+    }
 }

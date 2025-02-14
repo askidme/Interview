@@ -20,4 +20,13 @@ public class TopicServiceImpl implements TopicService {
     public List<TopicDTO> getAllTopics() {
         return topicRepository.findAll().stream().map(topicMapper::toDto).toList();
     }
+
+    @Override
+    public List<TopicDTO> getTopicsByTechnology(Long techId) {
+        return topicRepository.findByTechnology_Id(techId).stream().map(topicMapper::toDto).toList();
+    }
+
+    public TopicDTO getTopicById(Long topicId) {
+        return topicRepository.findById(topicId).map(topicMapper::toDto).orElse(null);
+    }
 }

@@ -23,5 +23,4 @@ public class InterviewQuestion {
     @ManyToOne
     @JoinColumn(name = "topic_id", nullable = false)
     private Topic topic;
-
 }

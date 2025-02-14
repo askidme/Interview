@@ -1,5 +1,6 @@
 package com.codergm.interview.util;
 
+import com.codergm.interview.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -25,12 +27,19 @@ public class JwtUtil {
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
+        Map<String, Object> claims = Map.of(
+                "userId", user.getUserId(),
+                "email", user.getEmail(),
+                "firstname", user.getFirstname(),
+                "lastname", user.getLastname());
+
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(user.getEmail())
+                .addClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SECRET_KEY, io.jsonwebtoken.SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -40,9 +49,9 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
+        return (Claims) Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY.getEncoded()).build()
+                .parse(token)
                 .getBody();
     }
 
